@@ -28,18 +28,18 @@ const ButtonView = ({ points, setPoints, clicks, setClicks }) => {
   }
 
   const addPoints = () => {
-    if (clicks === 500) {
-      setPoints(points + 249)
+    if (clicks === 499) {
+      setPoints(points + 240)
       setClicks(0)
       setAward(250)
       timer()
-    } else if (clicks % 100 === 0 && clicks > 0) {
-      setPoints(points + 39)
+    } else if ((clicks+1) % 100 === 0 && clicks > 0) {
+      setPoints(points + 40)
       setAward(40)
       timer()
     }
-    else if (clicks % 10 === 0 && clicks > 0) {
-      setPoints(points + 4)
+    else if ((clicks+1) % 10 === 0 && clicks > 0) {
+      setPoints(points + 5)
       setAward(5)
       timer()
     }
