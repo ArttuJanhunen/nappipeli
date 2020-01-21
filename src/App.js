@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Buttonview from './components/buttonview'
+import Buttonview from './components/buttonView'
 
 const App = ()=> {
   const [points, setPoints] = useState(20)
