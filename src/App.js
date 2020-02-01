@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Buttonview from './components/buttonView'
+import SignUp from './components/SignUp'
 
 const App = () => {
   const [points, setPoints] = useState(20)
@@ -40,6 +41,7 @@ const App = () => {
           </div>
         }
       </div>
+      {signupVisible && <SignUp/>}
 
       {playVisible &&
         <Buttonview points={points}
