@@ -27,8 +27,8 @@ const SignUp = () => {
     }
   }
 
-  const matchingPassword = (value) => {
-    if (password === value) {
+  const passwordValidation = (changedValue, value) => {
+    if (value === changedValue) {
       setPasswordInfo('Passwords match')
     } else {
       setPasswordInfo('Passwords do not match')
@@ -56,7 +56,10 @@ const SignUp = () => {
               placeholder="Password"
               name="Password"
               value={password}
-              onChange={({ target }) => setPassword(target.value)}
+              onChange={({ target }) => {
+                setPassword(target.value)
+                passwordValidation(target.value, passwordConfirm)
+              }}
             />
           </div>
           <div>
@@ -67,7 +70,7 @@ const SignUp = () => {
               value={passwordConfirm}
               onChange={({ target }) => {
                 setPasswordConfirm(target.value)
-                matchingPassword(target.value)
+                passwordValidation(target.value, password)
               }}
             />
           </div>
