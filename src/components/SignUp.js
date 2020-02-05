@@ -1,24 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import signupService from '../services/signup'
 
-const SignUp = () => {
+const SignUp = ({ setPage }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [passwordInfo, setPasswordInfo] = useState('')
+  const [takenUsers, setTakenUsers] = useState([])
+
+  useEffect(() => {
+    signupService.getUsers().then(response => {
+      setTakenUsers(response)
+    })
+  }, [])
 
   const handleSignUp = async (event) => {
     event.preventDefault()
+    if (takenUsers.some(user => (user.username === username))) {
+      setErrorMessage('Username is already taken')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      return
+    }
     try {
       if (password === passwordConfirm) {
-        const user = await signupService.signup({
+        await signupService.signup({
           username, password
         })
       }
       setUsername('')
       setPassword('')
       setPasswordConfirm('')
+      setPage('login')
     } catch (exception) {
       setErrorMessage('Something went wrong')
       setTimeout(() => {

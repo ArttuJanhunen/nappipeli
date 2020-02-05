@@ -1,58 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AwardBanner from './awardAlert'
+import gameService from '../services/game'
 
-const ButtonView = ({ points, setPoints, clicks, setClicks }) => {
+const ButtonView = () => {
 
   const [text, setText] = useState('Press me!')
-  const [award, setAward] = useState(null)
+  const [award, setAward] = useState('clicked')
   const [visible, setVisible] = useState(false)
+  const [clicks, setClicks] = useState(0)
+  const [id, setId] = useState(null)
+
+  useEffect(() => {
+    gameService.getClicks().then(response => {
+      setClicks(response[0].amount)
+      setId(response[0].id)
+    })
+  }, [])
 
   const timer = () => {
     setVisible(true)
     setTimeout(() => {
       setVisible(false)
-    }, 3000)
-  }
-
-  const addClicks = () => {
-    setPoints(points - 1)
-    if (points === 1) {
-      setText('Try again!')
-      setClicks(clicks + 1)
-    } else if (points === 0) {
-      setText('Press me!')
-      setPoints(20)
-    } else {
-      setClicks(clicks + 1)
-    }
-  }
-
-  const addPoints = () => {
-    if (clicks === 499) {
-      setPoints(points + 249)
-      setClicks(0)
-      setAward(250)
-      timer()
-    } else if ((clicks+1) % 100 === 0 && clicks > 0) {
-      setPoints(points + 39)
-      setAward(40)
-      timer()
-    }
-    else if ((clicks+1) % 10 === 0 && clicks > 0) {
-      setPoints(points + 4)
-      setAward(5)
-      timer()
-    }
+    }, 500)
   }
 
   const handleClick = () => {
-    addClicks()
-    addPoints()
+    gameService.addClick(clicks, id)
+    timer()
   }
 
   return (
     <div>
-      <p>My points: {points}</p>
+      <p>My points:</p>
       <button onClick={handleClick}>{text}</button>
 
       <p>Clicks: {clicks}</p>

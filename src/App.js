@@ -1,58 +1,62 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Buttonview from './components/buttonView'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Welcome from './components/welcome'
 
 const App = () => {
-  const [points, setPoints] = useState(20)
-  const [clicks, setClicks] = useState(0)
-  const [loginVisible, setLoginVisible] = useState(false)
-  const [playVisible, setPlayVisible] = useState(false)
-  const [signupVisible, setSignUpVisible] = useState(false)
   const [user, setUser] = useState(null)
+  const [page, setPage] = useState('welcome')
 
-  const signUpScreen = () => {
-    setSignUpVisible(true)
-    setLoginVisible(false)
-    setPlayVisible(false)
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      setPage('play')
+    }
+  }, [])
+
+  const pages = new Map([
+    ['register', <SignUp setPage={setPage} />],
+    ['login', <Login setUser={setUser} setPage={setPage} />],
+    ['play', <Buttonview />],
+    ['welcome', <Welcome />]
+  ])
+
+  const showPage = () => {
+    let visible = pages.get(page)
+    return (
+      visible
+    )
   }
 
-  const loginScreen = () => {
-    setLoginVisible(true)
-    setPlayVisible(false)
-    setSignUpVisible(false)
+  const logout = () => {
+    window.localStorage.removeItem('loggedUser')
+    setUser(null)
+    setPage('welcome')
   }
 
-  const playScreen = () => {
-    setPlayVisible(true)
-    setLoginVisible(false)
-    setSignUpVisible(false)
-  }
   return (
     <div className="App">
       <div>
         {user === null ?
-          <header>
-            <button onClick={() => loginScreen()}>Log in</button>
-            <button onClick={() => signUpScreen()}>Register</button>
-          </header>
-          :
           <div>
-            <p>Logged in as {user.username}</p>
+            <header>
+              <button onClick={() => setPage('login')}>Log in</button>
+              <button onClick={() => setPage('register')}>Register</button>
+            </header>
           </div>
+          :
+          <header>
+            <p>Logged in as {user.username}</p>
+            <button onClick={() => logout()}>Log out</button>
+          </header>
         }
       </div>
-      {signupVisible && <SignUp />}
-      {loginVisible && <Login />}
-
-      {playVisible &&
-        <Buttonview points={points}
-          setPoints={setPoints}
-          clicks={clicks}
-          setClicks={setClicks} />}
-
+      {showPage()}
     </div>
-  );
+  )
 }
 
 export default App;

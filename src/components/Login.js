@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import loginService from '../services/login'
 
-const Login = (setUser) => {
+const Login = ({ setUser, setPage }) => {
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
@@ -19,6 +19,7 @@ const Login = (setUser) => {
       setUser(user)
       setUsername('')
       setPassword('')
+      setPage('play')
     } catch (exception) {
       setErrorMessage('Invalid username or password')
       setTimeout(() => {
