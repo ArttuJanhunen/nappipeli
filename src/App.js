@@ -20,7 +20,7 @@ const App = () => {
   const pages = new Map([
     ['register', <SignUp setPage={setPage} />],
     ['login', <Login setUser={setUser} setPage={setPage} />],
-    ['play', <Buttonview />],
+    ['play', <Buttonview user={user}/>],
     ['welcome', <Welcome />]
   ])
 
@@ -49,7 +49,9 @@ const App = () => {
           </div>
           :
           <header>
-            <p>Logged in as {user.username}</p>
+            <p className="username-header">Logged in as
+            <br/>
+             {user.user.username}</p>
             <button onClick={() => logout()}>Log out</button>
           </header>
         }

@@ -31,7 +31,7 @@ const Login = ({ setUser, setPage }) => {
   return (
     <div>
       <h2>Log in</h2>
-      {errorMessage}
+      <p className="error">{errorMessage}</p>
       <form onSubmit={handleLogin}>
         <div>
           <input

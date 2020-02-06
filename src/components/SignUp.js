@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import signupService from '../services/signup'
+import gameService from '../services/game'
 
 const SignUp = ({ setPage }) => {
   const [username, setUsername] = useState('')
@@ -7,12 +8,16 @@ const SignUp = ({ setPage }) => {
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [passwordInfo, setPasswordInfo] = useState('')
+  const [infoClass, setInfoClass] = useState('')
   const [takenUsers, setTakenUsers] = useState([])
 
   useEffect(() => {
     signupService.getUsers().then(response => {
       setTakenUsers(response)
     })
+    if (takenUsers.length === 0) {
+      gameService.initClicks()
+    }
   }, [])
 
   const handleSignUp = async (event) => {
@@ -45,15 +50,17 @@ const SignUp = ({ setPage }) => {
   const passwordValidation = (changedValue, value) => {
     if (value === changedValue) {
       setPasswordInfo('Passwords match')
+      setInfoClass('success')
     } else {
       setPasswordInfo('Passwords do not match')
+      setInfoClass('error')
     }
   }
 
   return (
     <div>
       <h2>Register here</h2>
-      {errorMessage}
+      <p className="error">{errorMessage}</p>
       <div>
         <form onSubmit={handleSignUp}>
           <div>
@@ -89,7 +96,7 @@ const SignUp = ({ setPage }) => {
               }}
             />
           </div>
-          <div>
+          <div className={infoClass}>
             {passwordInfo}
           </div>
           <button type="submit">Sign up</button>

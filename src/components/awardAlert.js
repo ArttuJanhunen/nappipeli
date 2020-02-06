@@ -4,7 +4,7 @@ const AwardBanner = ({ award, visible }) => {
 
   if (visible) {
     return (
-      <div>
+      <div className="award">
         <p>You received {award} points!</p>
       </div>
     )
