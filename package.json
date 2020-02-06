@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "REACT_APP_API_URL=http://localhost:3001/api react-scripts start",
-    "build": "REACT_APP_API_URL=/API react-scripts build",
+    "build": "REACT_APP_API_URL=/api react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
