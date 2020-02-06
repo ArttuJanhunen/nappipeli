@@ -60,12 +60,12 @@ const ButtonView = ({ user }) => {
     return remainder
   }
 
-  const awardTimer=(reward)=>{
+  const awardTimer = (reward) => {
     setAward(reward)
     setVisible(true)
-    setTimeout(()=>{
+    setTimeout(() => {
       setVisible(false)
-    },3000)
+    }, 3000)
   }
 
   return (
@@ -76,7 +76,6 @@ const ButtonView = ({ user }) => {
         <div>
           <button onClick={handleClick}>Press for glory!</button>
 
-          <p>Clicks: {clicks}</p>
           <p>Next prize in: {prizeCounter()}</p>
         </div>
         :
@@ -92,4 +91,6 @@ const ButtonView = ({ user }) => {
   )
 }
 
+
+//<p>Clicks: {clicks}</p>
 export default ButtonView
