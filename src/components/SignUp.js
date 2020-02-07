@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import signupService from '../services/signup'
-import gameService from '../services/game'
 
-const SignUp = ({ setPage }) => {
-  const [username, setUsername] = useState(null)
-  const [password, setPassword] = useState(null)
+const SignUp = ({ setPage, takenUsers }) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [passwordInfo, setPasswordInfo] = useState(null)
   const [infoClass, setInfoClass] = useState(null)
-  const [takenUsers, setTakenUsers] = useState([])
-
-  useEffect(() => {
-    signupService.getUsers().then(response => {
-      setTakenUsers(response)
-    })
-    if (takenUsers.length === 0) {
-      gameService.initClicks()
-    }
-  }, [])
+  const [usernameError, setUsernameError] = useState(null)
+  const [passwordError, setPasswordError] = useState(null)
 
   const handleSignUp = async (event) => {
     event.preventDefault()
@@ -27,6 +18,21 @@ const SignUp = ({ setPage }) => {
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
+    }
+    if (username.length < 3) {
+      setUsernameError('Username too short, minimum length 3')
+      setTimeout(() => {
+        setUsernameError()
+      }, 5000)
+    }
+    if (password.length < 3) {
+      setPasswordError('Password too short, minimum length 3')
+      setTimeout(() => {
+        setPasswordError(null)
+      }, 5000)
+    }
+    if (takenUsers.some(user => (user.username === username)) || username.length < 3
+      || password.length < 3) {
       return
     }
     try {
@@ -37,7 +43,7 @@ const SignUp = ({ setPage }) => {
       }
       setUsername('')
       setPassword('')
-      setPasswordConfirm('')
+      setPasswordConfirm(null)
       setPage('login')
     } catch (exception) {
       setErrorMessage('Something went wrong')
@@ -64,6 +70,7 @@ const SignUp = ({ setPage }) => {
       <div>
         <form onSubmit={handleSignUp}>
           <div>
+            <p className="error">{usernameError}</p>
             <input
               type="text"
               placeholder="Username"
@@ -73,6 +80,7 @@ const SignUp = ({ setPage }) => {
             />
           </div>
           <div>
+            {passwordError !== null && <p className="error">{passwordError}</p>}
             <input
               type="password"
               placeholder="Password"

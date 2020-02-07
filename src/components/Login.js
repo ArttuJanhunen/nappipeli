@@ -17,8 +17,8 @@ const Login = ({ setUser, setPage }) => {
         'loggedUser', JSON.stringify(user)
       )
       setUser(user)
-      setUsername('')
-      setPassword('')
+      setUsername(null)
+      setPassword(null)
       setPage('play')
     } catch (exception) {
       setErrorMessage('Invalid username or password')
