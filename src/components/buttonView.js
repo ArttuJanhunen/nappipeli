@@ -28,15 +28,15 @@ const ButtonView = ({ user }) => {
   const addPoints = () => {
     if ((clicks + 1) % 500 === 0) {
       user.user.points = user.user.points + 250
-      gameService.addPoints(user.user.id, user.user.points - 1)
+      gameService.addPoints(user.user.id, user.user.points)
       awardTimer(250)
     } else if ((clicks + 1) % 100 === 0) {
       user.user.points = user.user.points + 40
-      gameService.addPoints(user.user.id, user.user.points - 1)
+      gameService.addPoints(user.user.id, user.user.points)
       awardTimer(40)
     } else if ((clicks + 1) % 10 === 0) {
       user.user.points = user.user.points + 5
-      gameService.addPoints(user.user.id, user.user.points - 1)
+      gameService.addPoints(user.user.id, user.user.points)
       awardTimer(5)
     }
   }
