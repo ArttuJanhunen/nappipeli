@@ -4,7 +4,7 @@ import gameService from '../services/game'
 
 const ButtonView = ({ user }) => {
 
-  const [award, setAward] = useState('')
+  const [award, setAward] = useState(null)
   const [visible, setVisible] = useState(false)
   const [clicks, setClicks] = useState(null)
   const [id, setId] = useState(null)

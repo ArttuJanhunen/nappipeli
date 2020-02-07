@@ -4,8 +4,8 @@ import loginService from '../services/login'
 const Login = ({ setUser, setPage }) => {
 
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState(null)
+  const [password, setPassword] = useState(null)
 
   const handleLogin = async (event) => {
     event.preventDefault()

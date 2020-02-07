@@ -3,12 +3,12 @@ import signupService from '../services/signup'
 import gameService from '../services/game'
 
 const SignUp = ({ setPage }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [username, setUsername] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [passwordConfirm, setPasswordConfirm] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [passwordInfo, setPasswordInfo] = useState('')
-  const [infoClass, setInfoClass] = useState('')
+  const [passwordInfo, setPasswordInfo] = useState(null)
+  const [infoClass, setInfoClass] = useState(null)
   const [takenUsers, setTakenUsers] = useState([])
 
   useEffect(() => {
