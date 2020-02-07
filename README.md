@@ -13,3 +13,6 @@ to your own computer, run `npm install` and `npm start`. App will be running in 
 
 If you want to modify frontend and run it with backend, clone both repositories and start both with 
 `npm install` and `npm start`. Frontend will start in localhost port `3000`.
+
+Backend will also need `.env` file, which contains `MONGODB_URI`, path to your mongodb, and `SECRET`,
+secret key of your liking to create token. 
